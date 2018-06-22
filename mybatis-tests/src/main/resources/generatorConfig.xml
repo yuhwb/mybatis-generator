@@ -7,10 +7,10 @@
     <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
-        <jdbcConnection driverClass="COM.ibm.db2.jdbc.app.DB2Driver"
-                        connectionURL="jdbc:db2:TEST"
-                        userId="db2admin"
-                        password="db2admin">
+        <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+                          connectionURL="jdbc:oracle:thin:@10.12.4.52:1521/lftong"
+                          userId="lift_c"
+                          password="homelink">
         </jdbcConnection>
 
         <javaTypeResolver >
