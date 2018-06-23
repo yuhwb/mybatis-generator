@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ehomepay.mybatis.dao.TestAVOMapper">
+  <resultMap id="BaseResultMap" type="com.ehomepay.mybatis.model.TestAVO">
+    <id column="PK_ID" jdbcType="DECIMAL" property="pkId" />
+    <result column="T_A" jdbcType="VARCHAR" property="tA" />
+    <result column="T_B" jdbcType="VARCHAR" property="tB" />
+    <result column="T_C" jdbcType="VARCHAR" property="tC" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PK_ID, T_A, T_B, T_C, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.ehomepay.mybatis.model.TestAVOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TEST_A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEST_A
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TEST_A
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ehomepay.mybatis.model.TestAVOExample">
+    delete from TEST_A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    <selectKey keyProperty="pkId" order="BEFORE" resultType="java.lang.Long">
+      SELECT SEQ_TEST_A.NEXTVAL FROM DUAL
+    </selectKey>
+    insert into TEST_A (PK_ID, T_A, T_B, 
+      T_C, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{pkId,jdbcType=DECIMAL}, #{tA,jdbcType=VARCHAR}, #{tB,jdbcType=VARCHAR}, 
+      #{tC,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    <selectKey keyProperty="pkId" order="BEFORE" resultType="java.lang.Long">
+      SELECT SEQ_TEST_A.NEXTVAL FROM DUAL
+    </selectKey>
+    insert into TEST_A
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      PK_ID,
+      <if test="tA != null">
+        T_A,
+      </if>
+      <if test="tB != null">
+        T_B,
+      </if>
+      <if test="tC != null">
+        T_C,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{pkId,jdbcType=DECIMAL},
+      <if test="tA != null">
+        #{tA,jdbcType=VARCHAR},
+      </if>
+      <if test="tB != null">
+        #{tB,jdbcType=VARCHAR},
+      </if>
+      <if test="tC != null">
+        #{tC,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehomepay.mybatis.model.TestAVOExample" resultType="java.lang.Long">
+    select count(*) from TEST_A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TEST_A
+    <set>
+      <if test="record.pkId != null">
+        PK_ID = #{record.pkId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tA != null">
+        T_A = #{record.tA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tB != null">
+        T_B = #{record.tB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tC != null">
+        T_C = #{record.tC,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TEST_A
+    set PK_ID = #{record.pkId,jdbcType=DECIMAL},
+      T_A = #{record.tA,jdbcType=VARCHAR},
+      T_B = #{record.tB,jdbcType=VARCHAR},
+      T_C = #{record.tC,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    update TEST_A
+    <set>
+      <if test="tA != null">
+        T_A = #{tA,jdbcType=VARCHAR},
+      </if>
+      <if test="tB != null">
+        T_B = #{tB,jdbcType=VARCHAR},
+      </if>
+      <if test="tC != null">
+        T_C = #{tC,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    update TEST_A
+    set T_A = #{tA,jdbcType=VARCHAR},
+      T_B = #{tB,jdbcType=VARCHAR},
+      T_C = #{tC,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ehomepay.mybatis.model.TestAVO">
+    <id column="PK_ID" jdbcType="DECIMAL" property="pkId" />
+    <result column="T_A" jdbcType="VARCHAR" property="tA" />
+    <result column="T_B" jdbcType="VARCHAR" property="tB" />
+    <result column="T_C" jdbcType="VARCHAR" property="tC" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PK_ID, T_A, T_B, T_C, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.ehomepay.mybatis.model.TestAVOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TEST_A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEST_A
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TEST_A
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ehomepay.mybatis.model.TestAVOExample">
+    delete from TEST_A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    <selectKey keyProperty="pkId" order="AFTER" resultType="java.lang.Long">
+      SELECT SEQ_TEST_A.NEXTVAL FROM DUAL
+    </selectKey>
+    insert into TEST_A (T_A, T_B, T_C, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{tA,jdbcType=VARCHAR}, #{tB,jdbcType=VARCHAR}, #{tC,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    <selectKey keyProperty="pkId" order="AFTER" resultType="java.lang.Long">
+      SELECT SEQ_TEST_A.NEXTVAL FROM DUAL
+    </selectKey>
+    insert into TEST_A
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tA != null">
+        T_A,
+      </if>
+      <if test="tB != null">
+        T_B,
+      </if>
+      <if test="tC != null">
+        T_C,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tA != null">
+        #{tA,jdbcType=VARCHAR},
+      </if>
+      <if test="tB != null">
+        #{tB,jdbcType=VARCHAR},
+      </if>
+      <if test="tC != null">
+        #{tC,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehomepay.mybatis.model.TestAVOExample" resultType="java.lang.Long">
+    select count(*) from TEST_A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TEST_A
+    <set>
+      <if test="record.pkId != null">
+        PK_ID = #{record.pkId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tA != null">
+        T_A = #{record.tA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tB != null">
+        T_B = #{record.tB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tC != null">
+        T_C = #{record.tC,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TEST_A
+    set PK_ID = #{record.pkId,jdbcType=DECIMAL},
+      T_A = #{record.tA,jdbcType=VARCHAR},
+      T_B = #{record.tB,jdbcType=VARCHAR},
+      T_C = #{record.tC,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    update TEST_A
+    <set>
+      <if test="tA != null">
+        T_A = #{tA,jdbcType=VARCHAR},
+      </if>
+      <if test="tB != null">
+        T_B = #{tB,jdbcType=VARCHAR},
+      </if>
+      <if test="tC != null">
+        T_C = #{tC,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    update TEST_A
+    set T_A = #{tA,jdbcType=VARCHAR},
+      T_B = #{tB,jdbcType=VARCHAR},
+      T_C = #{tC,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </update>
+  <resultMap id="BaseResultMap" type="com.ehomepay.mybatis.model.TestAVO">
+    <id column="PK_ID" jdbcType="DECIMAL" property="pkId" />
+    <result column="T_A" jdbcType="VARCHAR" property="tA" />
+    <result column="T_B" jdbcType="VARCHAR" property="tB" />
+    <result column="T_C" jdbcType="VARCHAR" property="tC" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PK_ID, T_A, T_B, T_C, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.ehomepay.mybatis.model.TestAVOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TEST_A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEST_A
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TEST_A
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ehomepay.mybatis.model.TestAVOExample">
+    delete from TEST_A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    insert into TEST_A (PK_ID, T_A, T_B, 
+      T_C, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{pkId,jdbcType=DECIMAL}, #{tA,jdbcType=VARCHAR}, #{tB,jdbcType=VARCHAR}, 
+      #{tC,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    insert into TEST_A
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkId != null">
+        PK_ID,
+      </if>
+      <if test="tA != null">
+        T_A,
+      </if>
+      <if test="tB != null">
+        T_B,
+      </if>
+      <if test="tC != null">
+        T_C,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkId != null">
+        #{pkId,jdbcType=DECIMAL},
+      </if>
+      <if test="tA != null">
+        #{tA,jdbcType=VARCHAR},
+      </if>
+      <if test="tB != null">
+        #{tB,jdbcType=VARCHAR},
+      </if>
+      <if test="tC != null">
+        #{tC,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ehomepay.mybatis.model.TestAVOExample" resultType="java.lang.Long">
+    select count(*) from TEST_A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TEST_A
+    <set>
+      <if test="record.pkId != null">
+        PK_ID = #{record.pkId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tA != null">
+        T_A = #{record.tA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tB != null">
+        T_B = #{record.tB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tC != null">
+        T_C = #{record.tC,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TEST_A
+    set PK_ID = #{record.pkId,jdbcType=DECIMAL},
+      T_A = #{record.tA,jdbcType=VARCHAR},
+      T_B = #{record.tB,jdbcType=VARCHAR},
+      T_C = #{record.tC,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    update TEST_A
+    <set>
+      <if test="tA != null">
+        T_A = #{tA,jdbcType=VARCHAR},
+      </if>
+      <if test="tB != null">
+        T_B = #{tB,jdbcType=VARCHAR},
+      </if>
+      <if test="tC != null">
+        T_C = #{tC,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ehomepay.mybatis.model.TestAVO">
+    update TEST_A
+    set T_A = #{tA,jdbcType=VARCHAR},
+      T_B = #{tB,jdbcType=VARCHAR},
+      T_C = #{tC,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where PK_ID = #{pkId,jdbcType=DECIMAL}
+  </update>
+</mapper>
